@@ -1,13 +1,14 @@
 """
 Player
 """
-
 import pygame
+
 
 class Player(pygame.sprite.Sprite):
     number = 0
 
-    def __init__(self, width=5, height=75, velocity=2, color=(255, 255, 255), name=""):
+    def __init__(self, width=5, height=75, velocity=2,
+                 color=(255, 255, 255), name=""):
         super(Player, self).__init__()
         Player.number += 1
         self.number = Player.number
@@ -63,7 +64,7 @@ class Player(pygame.sprite.Sprite):
         else:
             if yb > yp:
                 multiplier = -1
-        
+
         ball.change_direction([-1, multiplier])
         ball.bounce()
 
@@ -77,11 +78,10 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
         if x > win_size[0] - self.rect.width:
             self.rect.left = win_size[0] - self.rect.width
-        if y < 0: 
+        if y < 0:
             self.rect.top = 0
         if y > win_size[1] - self.rect.height:
             self.rect.top = win_size[1] - self.rect.height
-
 
         if self.number == 1:
             if x > win_size[0]//2:

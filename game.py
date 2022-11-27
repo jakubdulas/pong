@@ -5,9 +5,11 @@ from Player import Player
 from Ball import Ball
 from settings import *
 
+
 def move_players(player1, player2, keys):
     """
-    takes players as arguments and pressed keys. The funcion changes a position of players. 
+    takes players as arguments and pressed keys.
+    The funcion changes a position of players.
     """
     if keys[pygame.K_w]:
         player1.change_position('up')
@@ -32,9 +34,10 @@ def show_score(scr, player1, player2, font):
     """
     displays score on the top of the display
     """
-    text = font.render(f"{player1} ({player1.score}-{player2.score}) {player2}", False, (255, 255, 255))
+    text = font.render(f"{player1} ({player1.score}-{player2.score}) \
+                         {player2}", False, (255, 255, 255))
     scr.blit(text, [win.midtop[0]-text.get_width()//2, win.midtop[1]])
- 
+
 
 def announce_winner(scr, font, player, ball):
     """
@@ -42,7 +45,9 @@ def announce_winner(scr, font, player, ball):
     """
     ball.stop()
     text = font.render(f"{player} wins!", False, (255, 215, 0))
-    scr.blit(text, [win.centerx-text.get_width()//2, win.centery-text.get_height()//2])
+    scr.blit(text, [win.centerx-text.get_width()//2,
+                    win.centery-text.get_height()//2])
+
 
 def exit_game():
     """
@@ -50,6 +55,7 @@ def exit_game():
     """
     time.sleep(3)
     sys.exit()
+
 
 def draw_line(scr):
     """
@@ -60,6 +66,7 @@ def draw_line(scr):
         rect = pygame.Rect(scr.get_width()//2-2, i, 4, 15)
         i += 20
         pygame.draw.rect(scr, RED, rect)
+
 
 if __name__ == '__main__':
     pygame.init()
@@ -88,7 +95,7 @@ if __name__ == '__main__':
     ball.set_position(win.midtop)
 
     fps = pygame.time.Clock()
-    
+
     stop_game = False
 
     while True:
@@ -111,12 +118,12 @@ if __name__ == '__main__':
         player_collided = pygame.sprite.spritecollideany(ball, players)
         if player_collided is not None:
             player_collided.attack(ball)
-        
+
         # Choosing the winner
         if player1.score == MAX_SCORE:
             announce_winner(scr, font64, player1, ball)
             stop_game = True
-        
+
         if player2.score == MAX_SCORE:
             announce_winner(scr, font64, player2, ball)
             stop_game = True
@@ -130,5 +137,5 @@ if __name__ == '__main__':
 
         if stop_game:
             exit_game()
-        
+
         fps.tick(60)

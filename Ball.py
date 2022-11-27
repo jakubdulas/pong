@@ -1,15 +1,16 @@
 """
 Ball
 """
-
 import pygame
 import random
 
 
 class Ball(pygame.sprite.Sprite):
-    def __init__(self, player1, player2, size=20, velocity=4, color=(255, 255, 255), change_color=True, change_size=True, change_velocity=True):
+    def __init__(self, player1, player2, size=20, velocity=4,
+                 color=(255, 255, 255), change_color=True, change_size=True,
+                 change_velocity=True):
         super(Ball, self).__init__()
-        self.rect = pygame.Rect( 0, 0, size, size)
+        self.rect = pygame.Rect(0, 0, size, size)
         self.velocity = velocity
         self.color = color
         self.player1 = player1
@@ -20,7 +21,6 @@ class Ball(pygame.sprite.Sprite):
         self.change_size = change_size
         self.change_velocity = change_velocity
         self.initial_velocity = velocity
-
         choose_side = random.choice([-1, 1])
         self.vec = [choose_side*self.velocity, -self.velocity]
 
@@ -33,7 +33,7 @@ class Ball(pygame.sprite.Sprite):
             multiplierx = -1
         if self.vec[1] < 0:
             multipliery = -1
-        
+
         self.vec = [multiplierx*self.velocity, multipliery*self.velocity]
         self.rect.move_ip(self.vec)
         pygame.draw.rect(win, self.color, self.rect)
@@ -51,16 +51,18 @@ class Ball(pygame.sprite.Sprite):
         x, y = direction
         self.vec = [x*self.vec[0], y*self.vec[1]]
 
-        displacement = [self.vec[0]*self.player1.velocity, self.vec[1]*self.player1.velocity]
+        displacement = [self.vec[0]*self.player1.velocity,
+                        self.vec[1]*self.player1.velocity]
         self.rect.move_ip(displacement)
 
     def border_collision(self, win):
         """
-        changes vector if a ball hits a wall and place the ball if a player score a point
+        changes vector if a ball hits a wall and
+        place the ball if a player score a point
         """
         if self.rect.top < win.top or self.rect.bottom > win.bottom:
             self.vec[1] *= -1
-        
+
         if self.rect.left < win.left:
             self.player2.score += 1
             self.player1.set_initial_position(win)
@@ -118,11 +120,11 @@ class Ball(pygame.sprite.Sprite):
             size = random.randint(self.size//2, self.size)
             self.rect.width = size
             self.rect.height = size
-    
+
     def _change_color(self):
         """
         sets a color of the ball to random
         """
         if self.change_color:
-            rgb = random.randint(0xAAAAAA,0xFFFFFF)
+            rgb = random.randint(0xAAAAAA, 0xFFFFFF)
             self.color = pygame.color.Color(rgb)
